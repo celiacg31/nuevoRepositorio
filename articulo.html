@@ -10,75 +10,68 @@
 	<script src="js/mobile.js" type="text/javascript"></script>
 </head>
 <body>
-	<div id="page">
-		<div id="header">
-			<div>
-				<a href="index.html" class="logo"><img src="images/logo.png" alt=""></a>
-				<ul id="navigation">
-					<li>
-						<a href="index.html">Home</a>
-					</li>
-					<li class="menu selected">
-						<a href="#">About</a>
-						<ul class="primary">
-							<li>
-								<a href="#">Product</a>
-							</li>
-						</ul>
-					</li>
-					<li class="menu">
-						<a href="#">Blog</a>
-						<ul class="secondary">
-							<li>
-								<a href="#">Single post</a>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<a href="contact.html">Contact</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-		<div id="body">
-			<div class="header">
-				<div>
-					<h1>About</h1>
-				</div>
-			</div>
-			<div class="body">
-				<img src="images/bg-header-about.jpg" alt="">
-			</div>
-			<div class="footer">
-				<div class="sidebar">
-					<h1>Be Part of Our Community</h1>
-					<p>If you’re experiencing issues or having concerns about this website template, join the discussion <a href="http://www.freewebsitetemplates.com/forums/">on our forum</a> and meet other people in the community who share the same interests.</p>
-				</div>
-				<div class="article">
-					<h1>We Have Free Templates For Everyone</h1>
-					<p>Our website templates are created with inspiration, checked for quality and originality and meticulously sliced and coded. What’s more, they’re absolutely free! You can do a lot with them. You can modify them.</p>
-					<p>You can use them to design websites for clients, so long as you agree with the <a href="http://www.freewebsitetemplates.com/about/terms/">Terms of Use</a>. You can even remove all our links if you want to.</p>
-					<h1>We Have More Templates For You</h1>
-					<p>Looking for more templates? Just browse through all our <a href="http://www.freewebsitetemplates.com/">Free Website Templates</a>. But if you can’t find any website templates you can use, try our <a href="http://www.freewebsitetemplates.com/freewebdesign/">Free Web Design</a> service and tell us all about it. We love a good challenge!</p>
-					<h1>Template Details</h1>
-					<span>Design Version 2.</span>
-					<span>Code Version 1.</span>
-					<p>Website Template details, discussion and updates for this <a href="http://www.freewebsitetemplates.com/discuss/frozenyogurtshop/">Frozen Yogurt Shop Website Template</a>.</p>
-					<p>Website Template design by  <a href="http://www.freewebsitetemplates.com/">Free Website Templates</a>.</p>
-				</div>
-			</div>
-		</div>
-		<div id="footer">
-			<div>
-				<div class="connect">
-					<a href="http://freewebsitetemplates.com/go/facebook/" class="facebook">facebook</a>
-					<a href="http://freewebsitetemplates.com/go/twitter/" class="twitter">twitter</a>
-					<a href="http://freewebsitetemplates.com/go/googleplus/" class="googleplus">googleplus</a>
-					<a href="http://pinterest.com/fwtemplates/" class="pinterest">pinterest</a>
-				</div>
-				<p>&copy; 2023 Freeeze. All Rights Reserved.</p>
-			</div>
-		</div>
+	<div>
+		¿Qué pasa si tenemos archivos que no queremos que Git rastree, como archivos de copia de seguridad creados por nuestro editor o archivos intermedios creados durante el análisis de datos? Vamos a crear algunos archivos ficticios:
+
+$ mkdir results
+$ touch a.dat b.dat c.dat results/a.out results/b.out
+Mira lo que Git dice:
+
+$ git status
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	a.dat
+	b.dat
+	c.dat
+	results/
+nothing added to commit but untracked files present (use "git add" to track)
+Colocar estos archivos bajo el control de versiones sería un desperdicio de espacio en disco. Y lo que es peor, al tenerlos todos listados, podría distraernos de los cambios que realmente importan, así que vamos a decirle a Git que los ignore.
+
+Lo hacemos creando un archivo en el directorio raíz de nuestro proyecto llamado .gitignore:
+
+$ nano .gitignore
+$ cat .gitignore
+*.dat
+results/
+Estos patrones le dicen a Git que ignore cualquier archivo cuyo nombre termine en .dat y todo lo que haya en el directorio results. (Si alguno de estos archivos ya estaba siendo rastreado, Git seguirá rastreándolos.)
+
+Una vez que hemos creado este archivo, la salida de git status es mucho más limpia:
+
+$ git status
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	.gitignore
+nothing added to commit but untracked files present (use "git add" to track)
+Lo único que Git advierte ahora, es el archivo .gitignore recién creado. Podrías pensar que no queremos rastrearlo, pero todos aquellos con los que compartimos nuestro repositorio probablemente desearán ignorar las mismas cosas que nosotros. Vamos a agregar y hacer “commit” de .gitignore:
+
+$ git add .gitignore
+$ git commit -m "Add the ignore file"
+$ git status
+# On branch master
+nothing to commit, working directory clean
+Como ventaja, usar .gitignore nos ayuda a evitar agregar accidentalmente al repositorio los archivos que no queremos rastrear:
+
+$ git add a.dat
+The following paths are ignored by one of your .gitignore files:
+a.dat
+Use -f if you really want to add them.
+Si realmente queremos anular la configuración de ignorar, podemos usar git add -f para obligar a Git a añadir algo. Por ejemplo, git add -f a.dat. También podemos ver siempre el estado de los archivos ignorados si queremos:
+
+$ git status --ignored
+On branch master
+Ignored files:
+ (use "git add -f <file>..." to include in what will be committed)
+
+        a.dat
+        b.dat
+        c.dat
+        results/
+
+nothing to commit, working directory clean
 	</div>
 </body>
 </html>
