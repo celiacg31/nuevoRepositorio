@@ -352,7 +352,7 @@ img {
 	padding: 0;
 }
 #body div.header div h1 {
-	color: #FFFFFF;
+	color: 'green';
 	font-family: lato-regular-webfont;
 	font-size: 30px;
 	font-weight: normal;
